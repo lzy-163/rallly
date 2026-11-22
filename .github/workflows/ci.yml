@@ -63,6 +63,20 @@ jobs:
       DATABASE_URL: postgresql://postgres:postgres@localhost:5450/rallly
       DIRECT_DATABASE_URL: postgresql://postgres:postgres@localhost:5450/rallly
       CI: true
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: rallly
+        ports:
+          - 5450:5432
+        options: >-
+          --health-cmd="pg_isready"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup-node
